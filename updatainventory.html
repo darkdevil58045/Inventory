@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.com</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image:url(background.jpg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        /* Container */
+        .container {
+            flex: 1;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .button {
+            margin-left: 35px;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        /* Form Styles */
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="file"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Back Button Styles */
+        .back-button {
+            background-color: #007bff;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Update Inventory Item</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2>Select Item to Update</h2>
+        <div class="form-group">
+            <label for="inventorySelect">Inventory Item:</label>
+            <select id="inventorySelect" onchange="populateItemDetails()">
+                <option value="">Select an item</option>
+                <!-- Options will be populated dynamically -->
+            </select>
+             <!--Home-->
+    <a href="index.html"><button class="button">Home</button></a>
+        </div>
+
+        <form id="updateInventoryForm" style="display: none;">
+            <h2>Update Item Details</h2>
+            <div class="form-group">
+                <label for="itemName">Item Name:</label>
+                <input type="text" id="itemName" placeholder="Enter item name" required>
+            </div>
+            <div class="form-group">
+                <label for="itemDescription">Description:</label>
+                <textarea id="itemDescription" rows="4" placeholder="Enter item description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="itemQuantity">Quantity:</label>
+                <input type="number" id="itemQuantity" placeholder="Enter item quantity" min="0" required>
+            </div>
+            <div class="form-group">
+                <label for="itemPrice">Price ($):</label>
+                <input type="number" id="itemPrice" placeholder="Enter item price" min="0" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="itemImage">Upload New Image:</label>
+                <input type="file" id="itemImage" accept="image/*">
+            </div>
+            <button type="submit">Update Inventory</button>
+        </form>
+        
+        <!-- Back to Inventory List Button -->
+       <a href="showinventory.html"><button class="back-button" onclick="goToInventoryList()">Back to Inventory List</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Inventory Management &copy; 2024</p>
+    </footer>
+
+    <script>
+        let inventoryItems = []; // Array to hold inventory items
+
+        // Sample data for demonstration (this should be fetched from your database in a real application)
+        inventoryItems = [
+            { name: "Item 1", description: "Description 1", quantity: 10, price: 19.99, image: null },
+            { name: "Item 2", description: "Description 2", quantity: 5, price: 29.99, image: null }
+        ];
+
+        // Populate the dropdown with inventory items
+        function populateInventorySelect() {
+            const inventorySelect = document.getElementById("inventorySelect");
+            inventoryItems.forEach((item, index) => {
+                const option = document.createElement("option");
+                option.value = index; // Use index for reference
+                option.textContent = item.name;
+                inventorySelect.appendChild(option);
+            });
+        }
+
+        // Populate item details when selected
+        function populateItemDetails() {
+            const inventorySelect = document.getElementById("inventorySelect");
+            const selectedIndex = inventorySelect.value;
+            const form = document.getElementById("updateInventoryForm");
+            if (selectedIndex) {
+                const item = inventoryItems[selectedIndex];
+                document.getElementById("itemName").value = item.name;
+                document.getElementById("itemDescription").value = item.description;
+                document.getElementById("itemQuantity").value = item.quantity;
+                document.getElementById("itemPrice").value = item.price;
+                form.style.display = "block"; // Show the form
+            } else {
+                form.style.display = "none"; // Hide the form
+            }
+        }
+
+        // Function to handle form submission
+        document.getElementById("updateInventoryForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form data
+            const inventorySelect = document.getElementById("inventorySelect");
+            const selectedIndex = inventorySelect.value;
+            const itemName = document.getElementById("itemName").value;
+            const itemDescription = document.getElementById("itemDescription").value;
+            const itemQuantity = document.getElementById("itemQuantity").value;
+            const itemPrice = document.getElementById("itemPrice").value;
+            const itemImage = document.getElementById("itemImage").files[0];
+
+            // Basic validation
+            if (!itemName || !itemDescription || !itemQuantity || !itemPrice) {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            // Update the inventory item
+            const updatedItem = {
+                name: itemName,
+                description: itemDescription,
+                quantity: parseInt(itemQuantity, 10),
+                price: parseFloat(itemPrice),
+                image: itemImage ? URL.createObjectURL(itemImage) : null
+            };
+
+            inventoryItems[selectedIndex] = updatedItem; // Update the item in the array
+            alert("Inventory item updated successfully!");
+
+            // Clear the form
+            document.getElementById("updateInventoryForm").reset();
+            populateInventorySelect(); // Refresh the dropdown
+            populateItemDetails(); // Clear details
+        });
+
+        // Function to go to the Inventory List page
+        function goToInventoryList() {
+            window.location.href = "inventory_list.html"; // Replace with the actual URL of your inventory list page
+        }
+
+        // Populate the dropdown on page load
+        window.onload = populateInventorySelect;
+    </script>
+
+</body>
+</html>

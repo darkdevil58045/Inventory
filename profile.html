@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.com</title>
+    <style>
+        /* Reset and Base Styles */
+        * 
+        body {
+            font-family: Arial, sans-serif;
+            background-image:url(background.jpg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        /* Container */
+        .container {
+            flex: 1;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .button {
+            margin-left: 35px;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        /* Profile Card */
+        .profile-card {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-card img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 3px solid #333;
+        }
+
+        .profile-card h2 {
+            margin-top: 15px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        .profile-card p {
+            color: #777;
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        /* Edit Button */
+        .edit-profile-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .edit-profile-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Edit Form */
+        .edit-form {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+        }
+
+        .edit-form h3 {
+            margin-bottom: 15px;
+            font-size: 22px;
+            color: #333;
+        }
+
+        .edit-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .edit-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .edit-form input[type="text"],
+        .edit-form input[type="email"],
+        .edit-form input[type="tel"],
+        .edit-form select,
+        .edit-form input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .edit-form input[type="file"] {
+            padding: 3px;
+        }
+
+        .edit-form button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .edit-form button:hover {
+            background-color: #1e7e34;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .profile-card img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .profile-card h2 {
+                font-size: 24px;
+            }
+
+            .edit-profile-btn, .edit-form button {
+                width: 100%;
+                padding: 12px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>User Profile</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile Picture">
+            <h2 id="profileName">Name</h2>
+            <p id="profileEmail">Email</p>
+            <p id="profilePhone">phone no</p>
+            <p id="profileRole">Admin</p>
+            <button class="edit-profile-btn" onclick="toggleEditForm()">Edit Profile</button>
+        </div>
+         <!--Home-->
+         <a href="index.html"><button class="button">Home</button></a>
+
+        <!-- Edit Profile Form -->
+        <div class="edit-form" id="editForm">
+            <h3>Edit Profile</h3>
+            <div class="form-group">
+                <label for="uploadProfileImage">Upload New Profile Picture:</label>
+                <input type="file" id="uploadProfileImage" accept="image/*" onchange="previewImage(event)">
+            </div>
+            <div class="form-group">
+                <label for="editName">Name:</label>
+                <input type="text" id="editName" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="editEmail">Email:</label>
+                <input type="email" id="editEmail" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="editPhone">Phone:</label>
+                <input type="tel" id="editPhone" placeholder="Enter your phone number">
+            </div>
+            <div class="form-group">
+                <label for="editRole">Role:</label>
+                <select id="editRole">
+                    <option value="Admin">Admin</option>
+                    <option value="User">User</option>
+                </select>
+            </div>
+            <button onclick="saveProfile()">Save Changes</button>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Inventory Management &copy; 2024</p>
+    </footer>
+
+    <script>
+        // Load profile data from localStorage on page load
+        window.onload = function() {
+            loadProfile();
+        };
+
+        // Function to toggle the edit form
+        function toggleEditForm() {
+            const form = document.getElementById("editForm");
+            if (form.style.display === "none" || form.style.display === "") {
+                form.style.display = "block";
+                populateEditForm();
+            } else {
+                form.style.display = "none";
+            }
+        }
+
+        // Function to populate the edit form with current profile data
+        function populateEditForm() {
+            document.getElementById("editName").value = localStorage.getItem("profileName") || document.getElementById("profileName").innerText;
+            document.getElementById("editEmail").value = localStorage.getItem("profileEmail") || document.getElementById("profileEmail").innerText;
+            document.getElementById("editPhone").value = localStorage.getItem("profilePhone") || document.getElementById("profilePhone").innerText;
+            document.getElementById("editRole").value = localStorage.getItem("profileRole") || document.getElementById("profileRole").innerText;
+        }
+
+        // Function to preview the uploaded profile picture
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('profileImage').src = reader.result;
+            }
+            if(event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+
+        // Function to save profile changes
+        function saveProfile() {
+            const name = document.getElementById("editName").value.trim();
+            const email = document.getElementById("editEmail").value.trim();
+            const phone = document.getElementById("editPhone").value.trim();
+            const role = document.getElementById("editRole").value;
+
+            // Basic validation
+            if(name === "" || email === "" || phone === "") {
+                alert("Please fill in all the fields.");
+                return;
+            }
+
+            // Update the profile display
+            document.getElementById("profileName").innerText = name;
+            document.getElementById("profileEmail").innerText = email;
+            document.getElementById("profilePhone").innerText = phone;
+            document.getElementById("profileRole").innerText = role;
+
+            // Save to localStorage
+            localStorage.setItem("profileName", name);
+            localStorage.setItem("profileEmail", email);
+            localStorage.setItem("profilePhone", phone);
+            localStorage.setItem("profileRole", role);
+
+            // Optionally save the profile picture to localStorage
+            const profileImage = document.getElementById("profileImage").src;
+            localStorage.setItem("profileImage", profileImage);
+
+            // Hide the form after saving
+            toggleEditForm();
+
+            alert("Profile updated successfully!");
+        }
+
+        // Function to load profile data from localStorage
+        function loadProfile() {
+            const storedName = localStorage.getItem("profileName");
+            const storedEmail = localStorage.getItem("profileEmail");
+            const storedPhone = localStorage.getItem("profilePhone");
+            const storedRole = localStorage.getItem("profileRole");
+            const storedImage = localStorage.getItem("profileImage");
+
+            if(storedName) {
+                document.getElementById("profileName").innerText = storedName;
+            }
+
+            if(storedEmail) {
+                document.getElementById("profileEmail").innerText = storedEmail;
+            }
+
+            if(storedPhone) {
+                document.getElementById("profilePhone").innerText = storedPhone;
+            }
+
+            if(storedRole) {
+                document.getElementById("profileRole").innerText = storedRole;
+            }
+
+            if(storedImage) {
+                document.getElementById("profileImage").src = storedImage;
+            }
+        }
+    </script>
+
+</body>
+</html>

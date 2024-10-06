@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.com</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image:url(background.jpg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        /* Container */
+        .container {
+            flex: 1;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Form Styles */
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group select,
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Bill Output Styles */
+        .bill-output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        /* Back and Home Button Styles */
+        .back-button, .home-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover, .home-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        /* Invoice Styles */
+        .invoice {
+            border: 2px solid #333;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .invoice h3 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .invoice p {
+            margin: 5px 0;
+        }
+
+        .invoice .total {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Print Button */
+        .print-button {
+            background-color: #17a2b8;
+        }
+
+        .print-button:hover {
+            background-color: #138496;
+        }
+
+        /* Share Button */
+        .share-button {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        .share-button:hover {
+            background-color: #e0a800;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Billing Page</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2>Generate Bill</h2>
+        <div class="form-group">
+            <label for="itemSelect">Select Item:</label>
+            <select id="itemSelect" onchange="updatePrice()">
+                <option value="">Select an item</option>
+                <!-- Options will be populated dynamically -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="itemPrice">Price ($):</label>
+            <input type="number" id="itemPrice" placeholder="Item Price" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="itemQuantity">Quantity:</label>
+            <input type="number" id="itemQuantity" placeholder="Enter quantity" min="1" required>
+        </div>
+
+        <button id="generateBillButton">Generate Bill</button>
+
+        <!-- Bill Output -->
+        <div class="invoice" id="invoice">
+            <h3>Invoice</h3>
+            <p><strong>Item:</strong> <span id="invoiceItem"></span></p>
+            <p><strong>Description:</strong> <span id="invoiceDescription"></span></p>
+            <p><strong>Quantity:</strong> <span id="invoiceQuantity"></span></p>
+            <p class="total">Total Price: $<span id="invoiceTotal"></span></p>
+        </div>
+
+        <!-- Print and Share Buttons -->
+        <button class="print-button" onclick="printInvoice()">Print Invoice</button>
+        <button class="share-button" onclick="shareInvoice()">Share Invoice</button>
+
+        <!-- Back and Home Buttons -->
+        <a href="showinventory.html"><button class="back-button" onclick="goBack()">Back to Menu</button></a>
+        <button class="home-button" onclick="goHome()">Home</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Inventory Management &copy; 2024</p>
+    </footer>
+
+    <script>
+        let inventoryItems = []; // Array to hold inventory items
+
+        // Sample data for demonstration (this should be fetched from your database in a real application)
+        inventoryItems = [
+            { name: "Item 1", description: "Description 1", quantity: 10, price: 19.99 },
+            { name: "Item 2", description: "Description 2", quantity: 5, price: 29.99 },
+            { name: "Item 3", description: "Description 3", quantity: 8, price: 15.49 }
+        ];
+
+        // Function to populate the item select dropdown
+        function populateItemSelect() {
+            const itemSelect = document.getElementById("itemSelect");
+            inventoryItems.forEach((item, index) => {
+                const option = document.createElement("option");
+                option.value = index; // Use index for reference
+                option.textContent = item.name;
+                itemSelect.appendChild(option);
+            });
+        }
+
+        // Function to update price based on selected item
+        function updatePrice() {
+            const itemSelect = document.getElementById("itemSelect");
+            const selectedIndex = itemSelect.value;
+            const itemPriceInput = document.getElementById("itemPrice");
+            if (selectedIndex) {
+                const item = inventoryItems[selectedIndex];
+                itemPriceInput.value = item.price.toFixed(2); // Set price input
+            } else {
+                itemPriceInput.value = "";
+            }
+        }
+
+        // Function to generate the bill
+        document.getElementById("generateBillButton").addEventListener("click", function() {
+            const itemSelect = document.getElementById("itemSelect");
+            const selectedIndex = itemSelect.value;
+            const quantity = document.getElementById("itemQuantity").value;
+
+            if (!selectedIndex || !quantity) {
+                alert("Please select an item and enter a quantity.");
+                return;
+            }
+
+            const item = inventoryItems[selectedIndex];
+            const total = item.price * quantity;
+
+            // Display invoice summary
+            document.getElementById("invoiceItem").textContent = item.name;
+            document.getElementById("invoiceDescription").textContent = item.description;
+            document.getElementById("invoiceQuantity").textContent = quantity;
+            document.getElementById("invoiceTotal").textContent = total.toFixed(2);
+            document.getElementById("invoice").style.display = "block"; // Show invoice
+        });
+
+        // Function to print the invoice
+        function printInvoice() {
+            const invoice = document.getElementById("invoice");
+            const printWindow = window.open('', '', 'height=400,width=600');
+            printWindow.document.write('<html><head><title>Invoice</title></head><body>');
+            printWindow.document.write(invoice.innerHTML);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // Function to share the invoice (this can be customized as per requirements)
+        function shareInvoice() {
+            const invoiceDetails = `
+                Item: ${document.getElementById("invoiceItem").textContent}
+                Description: ${document.getElementById("invoiceDescription").textContent}
+                Quantity: ${document.getElementById("invoiceQuantity").textContent}
+                Total Price: $${document.getElementById("invoiceTotal").textContent}
+            `;
+            alert("Share the following invoice details:\n\n" + invoiceDetails);
+        }
+
+        // Function to go back to the previous menu
+        function goBack() {
+            window.history.back(); // Go back to the previous page
+        }
+
+        // Function to go to the home page
+        function goHome() {
+            window.location.href = "index.html"; // Change to your home page URL
+        }
+
+        // Populate the dropdown on page load
+        window.onload = populateItemSelect;
+    </script>
+
+</body>
+</html>

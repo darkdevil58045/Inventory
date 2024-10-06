@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.com</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image:url(background.jpg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        /* Container */
+        .container {
+            flex: 1;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .button {
+            margin-left: 35px;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        /* Form Styles */
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="file"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Inventory List Styles */
+        .inventory-list {
+            margin-top: 30px;
+        }
+
+        .inventory-item {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .inventory-item img {
+            max-width: 100px;
+            margin-right: 15px;
+        }
+
+        .inventory-item div {
+            flex-grow: 1;
+        }
+
+        .inventory-item button {
+            margin-left: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            button {
+                width: 100%;
+            }
+
+            .inventory-item {
+                display: block;
+            }
+
+            .inventory-item img {
+                max-width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Create Inventory Item</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2>Enter Inventory Details</h2>
+        <form id="createInventoryForm">
+            <div class="form-group">
+                <label for="itemName">Item Name:</label>
+                <input type="text" id="itemName" placeholder="Enter item name" required>
+            </div>
+            <div class="form-group">
+                <label for="itemDescription">Description:</label>
+                <textarea id="itemDescription" rows="4" placeholder="Enter item description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="itemQuantity">Quantity:</label>
+                <input type="number" id="itemQuantity" placeholder="Enter item quantity" min="0" required>
+            </div>
+            <div class="form-group">
+                <label for="itemPrice">Price (INR):</label>
+                <input type="number" id="itemPrice" placeholder="Enter item price" min="0" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="itemImage">Upload Image:</label>
+                <input type="file" id="itemImage" accept="image/*">
+            </div>
+            <button type="submit">Create Inventory</button>
+        </form>
+        <!--Home-->
+        <a href="index.html"><button class="button">Home</button></a>
+
+        <!-- Display Created Inventory -->
+        <div class="inventory-list">
+            <h2>Created Inventory Items</h2>
+            <div id="inventoryItems"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Inventory Management &copy; 2024</p>
+    </footer>
+
+    <script>
+        let currentItemIndex = -1; // Index of the item being edited
+        let inventoryItems = []; // Array to hold inventory items
+
+        // Function to handle form submission
+        document.getElementById("createInventoryForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form data
+            const itemName = document.getElementById("itemName").value;
+            const itemDescription = document.getElementById("itemDescription").value;
+            const itemQuantity = document.getElementById("itemQuantity").value;
+            const itemPrice = document.getElementById("itemPrice").value;
+            const itemImage = document.getElementById("itemImage").files[0];
+
+            // Basic validation
+            if (!itemName || !itemDescription || !itemQuantity || !itemPrice) {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            // Create an inventory object
+            const inventoryItem = {
+                name: itemName,
+                description: itemDescription,
+                quantity: parseInt(itemQuantity, 10),
+                price: parseFloat(itemPrice),
+                image: itemImage ? URL.createObjectURL(itemImage) : null
+            };
+
+            if (currentItemIndex === -1) {
+                // Add new item to the inventory
+                inventoryItems.push(inventoryItem);
+            } else {
+                // Update existing item
+                inventoryItems[currentItemIndex] = inventoryItem;
+                currentItemIndex = -1; // Reset index after updating
+            }
+
+            // Display the inventory items
+            displayInventoryItems();
+
+            // Clear the form
+            document.getElementById("createInventoryForm").reset();
+        });
+
+        function displayInventoryItems() {
+            const inventoryItemsDiv = document.getElementById("inventoryItems");
+            inventoryItemsDiv.innerHTML = ""; // Clear the current list
+
+            // Loop through each inventory item and create HTML
+            inventoryItems.forEach((item, index) => {
+                const itemDiv = document.createElement("div");
+                itemDiv.classList.add("inventory-item");
+
+                // Display item details
+                itemDiv.innerHTML = `
+                    ${item.image ? `<img src="${item.image}" alt="${item.name}">` : ""}
+                    <div>
+                        <strong>Name:</strong> ${item.name}<br>
+                        <strong>Description:</strong> ${item.description}<br>
+                        <strong>Quantity:</strong> ${item.quantity}<br>
+                        <strong>Price:</strong> $${item.price.toFixed(2)}
+                    </div>
+                    <button onclick="editInventoryItem(${index})">Edit</button>
+                    <button onclick="deleteInventoryItem(${index})">Delete</button>
+                `;
+                inventoryItemsDiv.appendChild(itemDiv);
+            });
+        }
+
+        function editInventoryItem(index) {
+            currentItemIndex = index; // Set the current index for editing
+            const item = inventoryItems[index];
+
+            // Populate form fields with the item's current details
+            document.getElementById("itemName").value = item.name;
+            document.getElementById("itemDescription").value = item.description;
+            document.getElementById("itemQuantity").value = item.quantity;
+            document.getElementById("itemPrice").value = item.price;
+            document.getElementById("itemImage").value = ""; // Clear image input for new image upload
+        }
+
+        function deleteInventoryItem(index) {
+            if (confirm("Are you sure you want to delete this item?")) {
+                inventoryItems.splice(index, 1); // Remove the item from the array
+                displayInventoryItems(); // Refresh the displayed items
+            }
+        }
+    </script>
+
+</body>
+</html>

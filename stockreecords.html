@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image:url(background.jpg);
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stock-table th, .stock-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .stock-table th {
+            background-color: #333;
+            color: white;
+        }
+
+        .stock-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .stock-table td {
+            color: #333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-edit {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .add-stock-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            text-align: center;
+        }
+
+        /* Form for adding new stock */
+        .add-stock-form {
+            display: none; /* Hidden by default */
+            margin-bottom: 20px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .stock-table th, .stock-table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .btn {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            .add-stock-btn {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Stock Records</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Add New Stock Button -->
+        <button class="add-stock-btn" onclick="toggleForm()">Add New Stock</button>
+        <a href="index.html"><button class="button">Home</button></a>
+
+        <!-- Add/Edit Stock Form -->
+        <div id="addStockForm" class="add-stock-form">
+            <h3 id="form-title">Add New Stock</h3>
+            <div class="form-group">
+                <label for="itemName">Item Name:</label>
+                <input type="text" id="itemName" required>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Price (Per Unit):</label>
+                <input type="number" id="price" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category" required>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Apparel">Apparel</option>
+                    <option value="Groceries">Groceries</option>
+                    <option value="Stationary">Stationary</option>
+                    <!-- Add more categories as needed -->
+                </select>
+            </div>
+            <button class="add-stock-btn" id="formSubmitBtn" onclick="submitForm()">Add Stock</button>
+        </div>
+
+        <!-- Stock Table -->
+        <table class="stock-table" id="stockTable">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Stock Quantity</th>
+                    <th>Price (Per Unit)</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Product 1</td>
+                    <td>50</td>
+                    <td>10-INR</td>
+                    <td>Electronics</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-edit" onclick="editStock(this)">Edit</button>
+                            <button class="btn btn-delete" onclick="deleteStock(this)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Product 2</td>
+                    <td>100</td>
+                    <td>5-INR</td>
+                    <td>Apparel</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-edit" onclick="editStock(this)">Edit</button>
+                            <button class="btn btn-delete" onclick="deleteStock(this)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Inventory Management &copy; 2024</p>
+    </footer>
+
+    <script>
+        var editingRow = null;
+
+        // Function to toggle Add Stock form
+        function toggleForm() {
+            var form = document.getElementById("addStockForm");
+            if (form.style.display === "none" || form.style.display === "") {
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        }
+
+        // Function to add or edit stock item
+        function submitForm() {
+            var itemName = document.getElementById("itemName").value;
+            var quantity = document.getElementById("quantity").value;
+            var price = document.getElementById("price").value;
+            var category = document.getElementById("category").value;
+
+            if (itemName === "" || quantity === "" || price === "" || category === "") {
+                alert("Please fill in all fields");
+                return;
+            }
+
+            if (editingRow === null) {
+                // Add new stock
+                var table = document.getElementById("stockTable").getElementsByTagName('tbody')[0];
+                var newRow = table.insertRow();
+
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                var cell3 = newRow.insertCell(2);
+                var cell4 = newRow.insertCell(3);
+                var cell5 = newRow.insertCell(4);
+
+                cell1.innerHTML = itemName;
+                cell2.innerHTML = quantity;
+                cell3.innerHTML =price + "-INR";
+                cell4.innerHTML = category;
+                cell5.innerHTML = '<div class="action-buttons"><button class="btn btn-edit" onclick="editStock(this)">Edit</button><button class="btn btn-delete" onclick="deleteStock(this)">Delete</button></div>';
+            } else {
+                // Edit existing stock
+                editingRow.cells[0].innerHTML = itemName;
+                editingRow.cells[1].innerHTML = quantity;
+                editingRow.cells[2].innerHTML = price + "-INR";
+                editingRow.cells[3].innerHTML = category;
+                editingRow = null;
+            }
+
+            // Reset form
+            resetForm();
+        }
+
+        // Function to reset form
+        function resetForm() {
+            document.getElementById("itemName").value = "";
+            document.getElementById("quantity").value = "";
+            document.getElementById("price").value = "";
+            document.getElementById("category").value = "";
+            document.getElementById("form-title").textContent = "Add New Stock";
+            document.getElementById("formSubmitBtn").textContent = "Add Stock";
+            editingRow = null;
+        }
+
+        // Function to delete stock
+        function deleteStock(button) {
+            var row = button.parentNode.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        // Function to edit stock
+        function editStock(button) {
+            editingRow = button.parentNode.parentNode.parentNode;
+            document.getElementById("itemName").value = editingRow.cells[0].innerHTML;
+            document.getElementById("quantity").value = editingRow.cells[1].innerHTML;
+            document.getElementById("price").value = editingRow.cells[2].innerHTML.replace("$", "");
+            document.getElementById("category").value = editingRow.cells[3].innerHTML;
+
+            document.getElementById("form-title").textContent = "Edit Stock";
+            document.getElementById("formSubmitBtn").textContent = "Update Stock";
+            toggleForm();
+        }
+    </script>
+
+</body>
+</html>

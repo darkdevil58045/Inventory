@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.come</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image:url(background.jpg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        /* Container */
+        .container {
+            flex: 1;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Form Styles */
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #c82333;
+        }
+
+        /* Back and Home Button Styles */
+        .back-button, .home-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover, .home-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        /* Success Message */
+        .success-message {
+            color: green;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Delete Inventory Item</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2>Select Item to Delete</h2>
+        <div class="form-group">
+            <label for="itemSelect">Select Item:</label>
+            <select id="itemSelect">
+                <option value="">Select an item</option>
+                <!-- Options will be populated dynamically -->
+            </select>
+        </div>
+
+        <button id="deleteItemButton">Delete Item</button>
+
+        <p class="success-message" id="successMessage" style="display:none;"></p>
+
+        <!-- Back and Home Buttons -->
+        <a href="showinventory.html"><button class="back-button" onclick="goBack()">Back to Menu</button></a>
+        <button class="home-button" onclick="goHome()">Home</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Inventory Management &copy; 2024</p>
+    </footer>
+
+    <script>
+        let inventoryItems = []; // Array to hold inventory items
+
+        // Sample data for demonstration (this should be fetched from your database in a real application)
+        inventoryItems = [
+            { name: "Item 1", description: "Description 1", quantity: 10, price: 19.99 },
+            { name: "Item 2", description: "Description 2", quantity: 5, price: 29.99 },
+            { name: "Item 3", description: "Description 3", quantity: 8, price: 15.49 }
+        ];
+
+        // Function to populate the item select dropdown
+        function populateItemSelect() {
+            const itemSelect = document.getElementById("itemSelect");
+            inventoryItems.forEach((item, index) => {
+                const option = document.createElement("option");
+                option.value = index; // Use index for reference
+                option.textContent = item.name;
+                itemSelect.appendChild(option);
+            });
+        }
+
+        // Function to delete the selected item
+        document.getElementById("deleteItemButton").addEventListener("click", function() {
+            const itemSelect = document.getElementById("itemSelect");
+            const selectedIndex = itemSelect.value;
+
+            if (selectedIndex === "") {
+                alert("Please select an item to delete.");
+                return;
+            }
+
+            // Remove item from inventory
+            inventoryItems.splice(selectedIndex, 1);
+            itemSelect.remove(selectedIndex); // Remove the option from the select dropdown
+
+            // Show success message
+            const successMessage = document.getElementById("successMessage");
+            successMessage.textContent = "Item deleted successfully!";
+            successMessage.style.display = "block";
+
+            // Clear selection
+            itemSelect.value = "";
+        });
+
+        // Function to go back to the previous menu
+        function goBack() {
+            window.history.back(); // Go back to the previous page
+        }
+
+        // Function to go to the home page
+        function goHome() {
+            window.location.href = "index.html"; // Change to your home page URL
+        }
+
+        // Populate the dropdown on page load
+        window.onload = populateItemSelect;
+    </script>
+
+</body>
+</html>

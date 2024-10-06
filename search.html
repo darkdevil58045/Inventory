@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management Menu Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Sidebar container */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            padding-top: 20px;
+            transition: 0.3s;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar links */
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        /* Links hover effect */
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        /* Main content */
+        .main-content {
+            margin-left: 0; /* Adjusted to zero initially */
+            padding: 20px;
+            transition: 0.3s;
+        }
+
+        /* Close button for sidebar */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            margin-left: 50px;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Menu image to open sidebar */
+        .menu-icon {
+            width: 50px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                position: fixed;
+                z-index: 1;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar menu panel -->
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">×</a>
+        <a href="#">Home</a>
+        <a href="#">Stock Records</a>
+        <a href="#">Stock Invoice</a>
+        <a href="#">Available Stock</a>
+        <a href="#">Stock Shortage</a>
+        <a href="#">Create Inventory</a>
+        <a href="#">Update Inventory</a>
+        <a href="#">Billing</a>
+        <a href="#">Delete Inventory</a>
+    </div>
+
+    <!-- Main content -->
+    <div id="main" class="main-content">
+        <!-- Replace button with clickable image for opening the sidebar -->
+        <img src="menu-icon.png" alt="Menu Icon" class="menu-icon" onclick="openNav()">
+        <h2>Inventory Management System</h2>
+        <p>Welcome to the inventory management system. Use the sidebar to navigate through the system.</p>
+    </div>
+
+    <script>
+        /* Function to open the sidebar */
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        /* Function to close the sidebar */
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+    </script>
+
+</body>
+</html>

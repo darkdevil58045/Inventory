@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image:url(background.jpg);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+        .button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Stock order table */
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .order-table th, .order-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .order-table th {
+            background-color: #333;
+            color: white;
+        }
+
+        .order-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .order-table td {
+            color: #333;
+        }
+
+        /* Search bar */
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .order-table th, .order-table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .search-bar {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Stock Ordered</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Search Bar -->
+        <input type="text" class="search-bar" id="searchInput" placeholder="Search for orders..." onkeyup="searchOrders()">
+        <!--Home-->
+        <a href="index.html"><button class="button">Home</button></a>
+
+        <!-- Order Table -->
+        <table class="order-table" id="orderTable">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Item Name</th>
+                    <th>Quantity Ordered</th>
+                    <th>Order Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ORD001</td>
+                    <td>Apple iPhone 14</td>
+                    <td>100</td>
+                    <td>2023-09-25</td>
+                    <td>Pending</td>
+                </tr>
+                <tr>
+                    <td>ORD002</td>
+                    <td>Samsung Galaxy S21</td>
+                    <td>50</td>
+                    <td>2023-09-30</td>
+                    <td>Shipped</td>
+                </tr>
+                <tr>
+                    <td>ORD003</td>
+                    <td>Dell Inspiron Laptop</td>
+                    <td>20</td>
+                    <td>2023-10-01</td>
+                    <td>Delivered</td>
+                </tr>
+                <tr>
+                    <td>ORD004</td>
+                    <td>HP Pavilion Desktop</td>
+                    <td>15</td>
+                    <td>2023-10-05</td>
+                    <td>Pending</td>
+                </tr>
+                <tr>
+                    <td>ORD005</td>
+                    <td>Logitech Wireless Mouse</td>
+                    <td>200</td>
+                    <td>2023-10-10</td>
+                    <td>Shipped</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Inventory Management &copy; 2024</p>
+    </footer>
+
+    <script>
+        // Function to filter/search orders
+        function searchOrders() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("orderTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                tr[i].style.display = "none";
+                td = tr[i].getElementsByTagName("td");
+                for (var j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

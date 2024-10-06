@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image:url(background.jpg);
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .invoice-table th, .invoice-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .invoice-table th {
+            background-color: #333;
+            color: white;
+        }
+
+        .invoice-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .invoice-table td {
+            color: #333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-edit {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .add-invoice-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            text-align: center;
+        }
+
+        /* Form for adding new invoice */
+        .add-invoice-form {
+            display: none; /* Hidden by default */
+            margin-bottom: 20px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .invoice-table th, .invoice-table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .btn {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            .add-invoice-btn {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Stock Invoice Records</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Search Bar for Old Invoices -->
+        <input type="text" class="search-bar" id="searchInput" placeholder="Search for invoices..." onkeyup="searchInvoices()">
+
+        <!-- Add New Invoice Button -->
+        <button class="add-invoice-btn" onclick="toggleForm()">Add New Invoice</button>
+        <a href="index.html"><button class="button">Home</button></a>
+
+        <!-- Add/Edit Invoice Form -->
+        <div id="addInvoiceForm" class="add-invoice-form">
+            <h3 id="form-title">Add New Invoice</h3>
+            <div class="form-group">
+                <label for="invoiceNumber">Invoice Number:</label>
+                <input type="text" id="invoiceNumber" required>
+            </div>
+            <div class="form-group">
+                <label for="customerName">Customer Name:</label>
+                <input type="text" id="customerName" required>
+            </div>
+            <div class="form-group">
+                <label for="invoiceDate">Invoice Date:</label>
+                <input type="date" id="invoiceDate" required>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" required>
+            </div>
+            <button class="add-invoice-btn" id="formSubmitBtn" onclick="submitForm()">Add Invoice</button>
+        </div>
+
+        <!-- Invoice Table -->
+        <table class="invoice-table" id="invoiceTable">
+            <thead>
+                <tr>
+                    <th>Invoice Number</th>
+                    <th>Customer Name</th>
+                    <th>Invoice Date</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>INV001</td>
+                    <td>John Doe</td>
+                    <td>2023-09-15</td>
+                    <td>$500</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-edit" onclick="editInvoice(this)">Edit</button>
+                            <button class="btn btn-delete" onclick="deleteInvoice(this)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>INV002</td>
+                    <td>Jane Smith</td>
+                    <td>2023-10-01</td>
+                    <td>$300</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-edit" onclick="editInvoice(this)">Edit</button>
+                            <button class="btn btn-delete" onclick="deleteInvoice(this)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Inventory Management &copy; 2024</p>
+    </footer>
+
+    <script>
+        var editingRow = null;
+
+        // Function to toggle Add Invoice form
+        function toggleForm() {
+            var form = document.getElementById("addInvoiceForm");
+            if (form.style.display === "none" || form.style.display === "") {
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        }
+
+        // Function to add or edit invoice
+        function submitForm() {
+            var invoiceNumber = document.getElementById("invoiceNumber").value;
+            var customerName = document.getElementById("customerName").value;
+            var invoiceDate = document.getElementById("invoiceDate").value;
+            var amount = document.getElementById("amount").value;
+
+            if (invoiceNumber === "" || customerName === "" || invoiceDate === "" || amount === "") {
+                alert("Please fill in all fields");
+                return;
+            }
+
+            if (editingRow === null) {
+                // Add new invoice
+                var table = document.getElementById("invoiceTable").getElementsByTagName('tbody')[0];
+                var newRow = table.insertRow();
+
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                var cell3 = newRow.insertCell(2);
+                var cell4 = newRow.insertCell(3);
+                var cell5 = newRow.insertCell(4);
+
+                cell1.innerHTML = invoiceNumber;
+                cell2.innerHTML = customerName;
+                cell3.innerHTML = invoiceDate;
+                cell4.innerHTML = "$" + amount;
+                cell5.innerHTML = '<div class="action-buttons"><button class="btn btn-edit" onclick="editInvoice(this)">Edit</button><button class="btn btn-delete" onclick="deleteInvoice(this)">Delete</button></div>';
+            } else {
+                // Edit existing invoice
+                editingRow.cells[0].innerHTML = invoiceNumber;
+                editingRow.cells[1].innerHTML = customerName;
+                editingRow.cells[2].innerHTML = invoiceDate;
+                editingRow.cells[3].innerHTML = "$" + amount;
+                editingRow = null;
+            }
+
+            // Reset form
+            resetForm();
+        }
+
+        // Function to reset form
+        function resetForm() {
+            document.getElementById("invoiceNumber").value = "";
+            document.getElementById("customerName").value = "";
+            document.getElementById("invoiceDate").value = "";
+            document.getElementById("amount").value = "";
+            document.getElementById("form-title").textContent = "Add New Invoice";
+            document.getElementById("formSubmitBtn").textContent = "Add Invoice";
+            editingRow = null;
+        }
+
+        // Function to delete invoice
+        function deleteInvoice(button) {
+            var row = button.parentNode.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        // Function to edit invoice
+        function editInvoice(button) {
+            editingRow = button.parentNode.parentNode.parentNode;
+            document.getElementById("invoiceNumber").value = editingRow.cells[0].innerHTML;
+            document.getElementById("customerName").value = editingRow.cells[1].innerHTML;
+            document.getElementById("invoiceDate").value = editingRow.cells[2].innerHTML;
+            document.getElementById("amount").value = editingRow.cells[3].innerHTML.replace("$", "");
+
+            document.getElementById("form-title").textContent = "Edit Invoice";
+            document.getElementById("formSubmitBtn").textContent = "Update Invoice";
+            toggleForm();
+        }
+
+        // Function to search invoices
+        function searchInvoices() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("invoiceTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                tr[i].style.display = "none";
+                td = tr[i].getElementsByTagName("td");
+                for (var j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

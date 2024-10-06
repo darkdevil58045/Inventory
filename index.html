@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image:url(background.jpg);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: rgb(20, 19, 18);
+            color: white;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        .company-logo {
+            margin-right: 10px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+        .header-right img, .header-left img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        .header-right .menu-dots, .header-right .cart-icon {
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+        .butt{
+            padding: 10px 20px;
+            margin-left: 10px;
+            margin-top: 5px;
+            margin-right: 20px;
+            background-color: gray;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin-left: 2%;
+            padding: 20px 2opx;
+            text-align: left;
+            font-size: xx-large;
+            color: rgb(18, 8, 4);
+            font-style: italic;
+            -webkit-text-stroke: black;
+            -webkit-text-stroke-color: black;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 25px;
+            margin-top: 10%;
+            font-size: 18px;
+            color: white;
+            background-color: #3f71f1;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .button-big {
+            margin-top: 5%;
+            padding: 25px 50px;
+            font-size: x-large;
+            background-color: #48adff;
+            background-size: 60px;
+        }
+        footer {
+            background-color: rgb(23, 23, 22);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .footer-button {
+            background-color: #48adff;
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 40px;
+        }
+        .search-container {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 500px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            padding: 10px 15px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        
+        /* Sidebar container (initially hidden) */
+        .sidebar {
+            height: 100%;
+            width: 0; /* Hidden initially */
+            position: fixed;
+            top: 0;
+            right: 0; /* Positioned on the right side */
+            background-color: #333;
+            overflow-x: hidden; /* Disable horizontal scroll */
+            transition: 0.5s; /* Smooth transition */
+            padding-top: 60px; /* Add top padding */
+        }
+
+        /* Sidebar links */
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        /* Links hover effect */
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        /* Main content */
+        .main-content {
+            margin-left: 0; /* Adjusted to zero initially */
+            padding: 20px;
+            transition: 0.3s;
+        }
+
+        /* Close button for sidebar */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            margin-left: 50px;
+            cursor: pointer;
+            color: white;
+        }
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                position: fixed;
+                z-index: 1;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <img class="company-logo" src="logo.jpg" alt="Company Logo">
+            <span>Inventory Management</span>
+        </div>
+        <div class="header-right">
+            <a href="login.html"><button class="butt">Login/Register</button></a>
+            <a href="profile.html"><img class="profile-icon" src="profile.png" alt="Profile Icon"></a>
+            <a href="cart.html"><img class="cart-icon" src="cart.jpg" alt="Cart Icon"></a>
+            <!-- Sidebar menu panel -->
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">×</a>
+        <a href="index.html">Home</a>
+        <a href="stockreecords.html">Stock Records</a>
+        <a href="stockinvoice.html">Stock Invoice</a>
+        <a href="avaiable.html">Available Stock</a>
+        <a href="ordered.html">Stock Ordered</a>
+        <a href="Createinventory.html">Create Inventory</a>
+        <a href="updatainventory.html">Update Inventory</a>
+        <a href="showinventory.html">Show Inventory</a>
+        <a href="billing.html">Billing</a>
+        <a href="deleteinventory.html">Delete Inventory</a>
+    </div>
+
+    <!-- Main content -->
+    <div id="main" class="main-content">
+        <!-- Replace button with clickable image for opening the sidebar -->
+        <img src="menu.png" alt="Menu Icon" class="menu-icon" onclick="openNav()">
+    </div>
+    <script>
+        /* Function to open the sidebar */
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";  /* Set width to open the sidebar */
+        }
+
+        /* Function to close the sidebar */
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";  /* Set width to 0 to hide the sidebar */
+        }
+    </script>
+        </div>
+    </header>
+    <main>
+        <h1>For Quick Stock Record</h1>
+        <a href="index.html"><button class="button">Home</button></a>
+        <a href="stockreecords.html"><button class="button">Stock Records</button></a>
+        <a href="stockinvoice.html"><button class="button">Stock Invoice</button></a>
+        <a href="avaiable.html"><button class="button">Available Stock</button></a>
+        <a href="ordered.html"><button class="button">Stock Ordered</button></a>
+        
+        <br><br>
+        <div class="search-container">
+            <form action="search-results.html" method="get">
+                <input type="text" name="query" placeholder="Search here...">
+                <input type="submit" value="Search">
+            </form>
+        </div>
+        <br><br>
+
+        <a href="Createinventory.html"><button class="button button-big">Create Inventory</button></a>
+        <a href="updatainventory.html"><button class="button button-big">Update Inventory</button>
+        <a href="showinventory.html"><button class="button button-big">Show Inventory</button></a>
+        <a href="billing.html"><button class="button button-big">Billing</button></a>
+        <a href="deleteinventory.html"><button class="button button-big">Delete Inventory</button></a>
+    </main>
+    
+    <footer>
+        <a href="help.html"><button class="footer-button">Help</button></a>
+        <a href="aboutus.html"><button class="footer-button">About Us</button></a>
+    </footer>
+
+</body>
+</html>

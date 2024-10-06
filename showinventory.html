@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.com</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image:url(background.jpg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        /* Container */
+        .container {
+            flex: 1;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .button {
+            margin-left: 35px;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        /* Button Styles */
+        .button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .view-button {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .edit-button {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Inventory List</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2>All Inventory Items</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Price (INR)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="inventoryTableBody">
+                <!-- Inventory items will be populated here -->
+            </tbody>
+        </table>
+
+        <!-- Back Button -->
+        <a href="Createinventory.html"><button class="back-button" onclick="goBack()">Back to Menu</button></a>
+        <!--Home-->
+    <a href="index.html"><button class="button">Home</button></a>
+    </div>
+    
+
+    <!-- Footer -->
+    <footer>
+        <p>Inventory Management &copy; 2024</p>
+    </footer>
+
+    <script>
+        let inventoryItems = []; // Array to hold inventory items
+
+        // Sample data for demonstration (this should be fetched from your database in a real application)
+        inventoryItems = [
+            { name: "Item 1", description: "Description 1", quantity: 10, price: 19.99 },
+            { name: "Item 2", description: "Description 2", quantity: 5, price: 29.99 },
+            { name: "Item 3", description: "Description 3", quantity: 8, price: 15.49 }
+        ];
+
+        // Function to populate the inventory table
+        function populateInventoryTable() {
+            const tableBody = document.getElementById("inventoryTableBody");
+            tableBody.innerHTML = ""; // Clear existing rows
+
+            inventoryItems.forEach((item, index) => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.description}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.price.toFixed(2)}</td>
+                    <td>
+                        <button class="button view-button" onclick="viewItem(${index})">View</button>
+                        <button class="button edit-button" onclick="editItem(${index})">Edit</button>
+                        <button class="button delete-button" onclick="deleteItem(${index})">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to view item details
+        function viewItem(index) {
+            const item = inventoryItems[index];
+            alert(`Viewing Item:\n\nName: ${item.name}\nDescription: ${item.description}\nQuantity: ${item.quantity}\nPrice: INR${item.price.toFixed(2)}`);
+        }
+
+        // Function to edit item (you can modify this to redirect to the edit page)
+        function editItem(index) {
+            alert(`Editing Item: ${inventoryItems[index].name}`);
+            // You can redirect to the update inventory page with the item ID or index
+            window.location.href = `update_inventory.html?index=${index}`; // Assuming you will pass index to edit
+        }
+
+        // Function to delete an item
+        function deleteItem(index) {
+            if (confirm("Are you sure you want to delete this item?")) {
+                inventoryItems.splice(index, 1); // Remove the item from the array
+                populateInventoryTable(); // Refresh the table
+                alert("Item deleted successfully!");
+            }
+        }
+
+        // Function to go back to the previous menu
+        function goBack() {
+            window.history.back(); // Go back to the previous page
+        }
+
+        // Populate the inventory table on page load
+        window.onload = populateInventoryTable;
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.com</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image:url(background.jpg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        /* Main Container */
+        .container {
+            flex: 1;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* About Section */
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Team Section */
+        .team-member {
+            margin-bottom: 20px;
+        }
+
+        .team-member h3 {
+            margin-bottom: 5px;
+            color: #007bff;
+        }
+
+        /* Back and Home Button Styles */
+        .back-button, .home-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover, .home-button:hover {
+            background-color: #218838;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>About Us</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2>Our Mission</h2>
+        <p>At Inventory Management System, our mission is to provide a comprehensive and user-friendly platform for businesses to manage their inventory efficiently. We aim to streamline inventory processes, reduce waste, and improve overall productivity.</p>
+
+        <h2>Our Vision</h2>
+        <p>We envision a world where businesses of all sizes can operate smoothly with effective inventory control, leading to enhanced profitability and sustainability.</p>
+
+        <h2>Meet Our Team</h2>
+        <div class="team-member">
+            <h3>Ayaan Ahmed - CEO</h3>
+            <p>John has over 10 years of experience in inventory management and is passionate about helping businesses optimize their operations.</p>
+        </div>
+        <div class="team-member">
+            <h3>Faizan khan - CTO</h3>
+            <p>Jane is a tech enthusiast with a deep understanding of software development and system architecture.</p>
+        </div>
+        <div class="team-member">
+            <h3>Faraaz khan - Product Manager 1</h3>
+            <p>Emily leads the product team to ensure that our solutions meet the needs of our users effectively.</p>
+        </div>
+        <div class="team-member">
+            <h3>Chandu J - Product Manager 2</h3>
+            <p>Emily leads the product team to ensure that our solutions meet the needs of our users effectively.</p>
+        </div>
+
+
+        <!-- Back and Home Buttons -->
+        <button class="home-button" onclick="goHome()">Home</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Inventory Management &copy; 2024</p>
+    </footer>
+
+    <script>
+        // Function to go back to the previous menu
+        function goBack() {
+            window.history.back(); // Go back to the previous page
+        }
+
+        // Function to go to the home page
+        function goHome() {
+            window.location.href = "index.html"; // Change to your home page URL
+        }
+    </script>
+
+</body>
+</html>

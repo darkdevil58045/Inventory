@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.com</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image:url(background.jpg);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+        .button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Stock table */
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stock-table th, .stock-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .stock-table th {
+            background-color: #333;
+            color: white;
+        }
+
+        .stock-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .stock-table td {
+            color: #333;
+        }
+
+        /* Search bar */
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .stock-table th, .stock-table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .search-bar {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Available Stock</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Search Bar -->
+        <input type="text" class="search-bar" id="searchInput" placeholder="Search for stock..." onkeyup="searchStock()">
+        <!--Home-->
+        <a href="index.html"><button class="button">Home</button></a>
+        <!-- Stock Table -->
+        <table class="stock-table" id="stockTable">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Apple iPhone 14</td>
+                    <td>50</td>
+                    <td>$999</td>
+                    <td>Electronics</td>
+                </tr>
+                <tr>
+                    <td>Samsung Galaxy S21</td>
+                    <td>30</td>
+                    <td>$799</td>
+                    <td>Electronics</td>
+                </tr>
+                <tr>
+                    <td>Dell Inspiron Laptop</td>
+                    <td>10</td>
+                    <td>$1200</td>
+                    <td>Computers</td>
+                </tr>
+                <tr>
+                    <td>HP Pavilion Desktop</td>
+                    <td>25</td>
+                    <td>$950</td>
+                    <td>Computers</td>
+                </tr>
+                <tr>
+                    <td>Logitech Wireless Mouse</td>
+                    <td>100</td>
+                    <td>$30</td>
+                    <td>Accessories</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Inventory Management &copy; 2024</p>
+    </footer>
+
+    <script>
+        // Function to filter/search stock
+        function searchStock() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("stockTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                tr[i].style.display = "none";
+                td = tr[i].getElementsByTagName("td");
+                for (var j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

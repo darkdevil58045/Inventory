@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.com</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image:url(background.jpg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        /* Main Container */
+        .container {
+            flex: 1;
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Help Section */
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .faq {
+            margin-bottom: 20px;
+        }
+
+        .faq p {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        /* Contact Form Styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Back and Home Button Styles */
+        .back-button, .home-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover, .home-button:hover {
+            background-color: #218838;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Help Page</h1>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2>General Help</h2>
+        <p>Welcome to the help section of the Inventory Management System. Here you can find answers to common questions and contact support for further assistance.</p>
+
+        <h2>Frequently Asked Questions (FAQs)</h2>
+        <div class="faq">
+            <p><strong>Q1:</strong> How do I add a new inventory item?</p>
+            <p>A1: You can add a new item by navigating to the "Create Inventory" page, filling in the details, and saving.</p>
+        </div>
+        <div class="faq">
+            <p><strong>Q2:</strong> How can I view existing inventory?</p>
+            <p>A2: You can view your inventory by going to the "Stock Records" page.</p>
+        </div>
+        <div class="faq">
+            <p><strong>Q3:</strong> What should I do if I encounter an error?</p>
+            <p>A3: If you face any issues, please contact support using the form below.</p>
+        </div>
+
+        <h2>Contact Us</h2>
+        <p>If you have further questions or need assistance, please fill out the contact form below:</p>
+        <div class="form-group">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Your Message:</label>
+            <textarea id="message" rows="4" placeholder="Enter your message" required></textarea>
+        </div>
+        <button id="sendMessageButton">Send Message</button>
+
+        <!-- Back and Home Buttons -->
+        <button class="home-button" onclick="goHome()">Home</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Inventory Management &copy; 2024</p>
+    </footer>
+
+    <script>
+        // Function to go back to the previous menu
+        function goBack() {
+            window.history.back(); // Go back to the previous page
+        }
+
+        // Function to go to the home page
+        function goHome() {
+            window.location.href = "index.html"; // Change to your home page URL
+        }
+
+        // Function to handle message sending (dummy function for now)
+        document.getElementById("sendMessageButton").addEventListener("click", function() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+
+            if (name && email && message) {
+                alert("Thank you for your message, " + name + "! We will get back to you shortly.");
+                // Here you would typically send the message to your server
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+    </script>
+
+</body>
+</html>

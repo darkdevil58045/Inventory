@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.inventorymanagement.come</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image:url(background.jpg);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #218838;
+        }
+        .remove-button {
+            background-color: #dc3545;
+        }
+        .remove-button:hover {
+            background-color: #c82333;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .checkout {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Shopping Cart</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                <!-- Example items; you can dynamically generate this using JavaScript or a backend -->
+                <tr>
+                    <td>Product 1</td>
+                    <td>10.00</td>
+                    <td>
+                        <input type="number" value="1" min="1" style="width: 50px;">
+                    </td>
+                    <td>10.00</td>
+                    <td>
+                        <button class="button remove-button">Remove</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Product 2</td>
+                    <td>15.00</td>
+                    <td>
+                        <input type="number" value="1" min="1" style="width: 50px;">
+                    </td>
+                    <td>15.00</td>
+                    <td>
+                        <button class="button remove-button">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="total">Total: 25.00</div>
+        <div class="checkout">
+            <a href="checkout.html"><button class="button">Proceed to Checkout</button></a>
+        </div>
+    </div>
+</body>
+</html>
